@@ -1,0 +1,36 @@
+{
+  "name": "@flatfile/listener-template",
+  "private": true,
+  "version": "0.0.0",
+  "author": "Flatfile",
+  "main": "src/index.ts",
+  "description": "A Flatfile listener for the Autobuild App",
+  "license": "ISC",
+  "scripts": {
+    "dev": "flatfile develop",
+    "deploy": "flatfile deploy",
+    "list": "flatfile list",
+    "delete": "flatfile delete",
+    "check": "biome check && tsc --noEmit",
+    "fix": "biome check --write"
+  },
+  "dependencies": {
+    "@flatfile/api": "latest",
+    "@flatfile/http-logger": "latest",
+    "@flatfile/listener": "latest",
+    "@flatfile/plugin-job-handler": "latest",
+    "@flatfile/plugin-record-hook": "latest",
+    "@flatfile/plugin-space-configure": "latest",
+    "@flatfile/plugin-xlsx-extractor": "latest",
+    "@flatfile/utils-debugger": "latest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.1.1",
+    "@total-typescript/tsconfig": "latest",
+    "@types/bun": "latest",
+    "flatfile": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "latest"
+  }
+}
