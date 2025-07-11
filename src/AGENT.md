@@ -92,7 +92,7 @@ Follow these guidelines to ensure your code is clean, maintainable, and adheres 
 - Follow SOLID principles.
 - Prefer composition over inheritance.
 - Declare interfaces to define contracts.
-- Write small classes with a single purpose:
+- Write small classes with a single purpose:``
   - Less than 200 instructions.
   - Less than 10 public methods.
   - Less than 10 properties.
