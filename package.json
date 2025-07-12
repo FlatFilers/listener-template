@@ -1,5 +1,5 @@
 {
-  "name": "@flatfile/listener-template",
+  "name": "flatfile-listener",
   "private": true,
   "version": "0.0.0",
   "author": "Flatfile",

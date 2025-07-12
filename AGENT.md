@@ -1,164 +1,244 @@
-# Coding Guidelines
+# Flatfile Listener
 
-Follow these guidelines to ensure your code is clean, maintainable, and adheres to best practices. Remember, less code is better. Lines of code = Debt.
+This is a Flatfile listener that uses the core patterns for building event-driven data import workflows. Listeners are the foundation of Flatfile's architecture—they respond to events throughout the data import lifecycle and enable all the powerful functionality in your Flatfile implementation.
 
-## Key Mindsets
+## About Listeners
 
-**1** **Simplicity**: Write simple and straightforward code.
-**2** **Readability**: Ensure your code is easy to read and understand.
-**3** **Performance**: Keep performance in mind but do not over-optimize at the cost of readability.
-**4** **Maintainability**: Write code that is easy to maintain and update.
-**5** **Testability**: Ensure your code is easy to test.
-**6** **Reusability**: Write reusable components and functions.
+Listeners are functions you write that respond to Events by executing custom code. They define how your Spaces behave and what happens when users interact with your data. This listener shows how to handle the most common listener patterns:
 
-## TypeScript General Guidelines
+- **Space Configuration**: Setting up workbooks, sheets, actions, and themes
+- **Data Validation**: Custom field and record-level validation using hooks
+- **Job Processing**: Handling long-running operations like file extraction and data submission
+- **File Operations**: Processing uploaded XLSX files with automatic extraction
+- **User Interactions**: Responding to custom actions and button clicks
 
-### Basic Principles
+This listener specifically is built for an "Autobuild App" workflow.
 
-- Use English for all code and documentation.
-- Always declare the type of each variable and function (parameters and return value).
-- Avoid using `any`.
-- Create necessary types.
-- Use JSDoc to document public classes and methods.
-- Don't leave blank lines within a function.
-- One export per file.
+## Project Structure
 
-### Nomenclature
+```
+src/
+├── index.ts           # Main listener entry point
+├── blueprints/        # Configuration files
+│   ├── actions/       # Action configurations
+│   ├── sheets/        # Sheet configurations
+│   ├── workbooks/     # Workbook configurations
+│   └── space.ts       # Space configuration
+└── handlers/          # Event handlers
+    ├── configure-space.handler.ts
+    ├── demo-hook.handler.ts
+    └── submit-action.handler.ts
+```
 
-- Use PascalCase for classes.
-- Use camelCase for variables, functions, and methods.
-- Use kebab-case for file and directory names.
-- Use UPPERCASE for environment variables.
-- Avoid magic numbers and define constants.
-- Start each function with a verb.
-- Use verbs for boolean variables. Example: `isLoading`, `hasError`, `canDelete`, etc.
-- Use complete words instead of abbreviations and correct spelling.
-- Except for standard abbreviations like `API`, `URL`, etc.
-- Except for well-known abbreviations:
-  - `i`, `j` for loops
-  - `err` for errors
-  - `ctx` for contexts
-  - `req`, `res`, `next` for middleware function parameters
+## Build & Commands
 
-### Functions
+- Check code for errors: `bun run check` (runs biome check and TypeScript type checking)
+- Fix linting/formatting: `bun run fix` (runs biome check with --write to auto-fix)
+- Start development server: `bun run dev`
+- Deploy listener to Flatfile: `bun run deploy`
+- List all listeners: `bun run list`
+- Delete listener: `bun run delete`
 
-- In this context, what is understood as a function will also apply to a method.
-- Write short functions with a single purpose (less than 20 instructions).
-- Name functions with a verb and something else.
-  - If it returns a boolean, use `isX` or `hasX`, `canX`, etc.
-  - If it doesn't return anything, use `executeX` or `saveX`, etc.
-- Avoid nesting blocks by:
-  - Early checks and returns.
-  - Extraction to utility functions.
-- Use higher-order functions (`map`, `filter`, `reduce`, etc.) to avoid function nesting.
-- Use arrow functions for simple functions (less than 3 instructions).
-- Use named functions for non-simple functions.
-- Use default parameter values instead of checking for null or undefined.
-- Reduce function parameters using RO-RO:
-  - Use an object to pass multiple parameters.
-  - Use an object to return results.
-  - Declare necessary types for input arguments and output.
-- Use a single level of abstraction.
+### Development Environment
 
-### Data
+- Uses Flatfile CLI for development and deployment
+- Requires `.env` file with Flatfile API key and environment ID
+- Webhook URL needs to be updated in `src/index.ts`
+- Package manager: bun (preferred), npm/yarn/pnpm also supported
 
-- Don't abuse primitive types and encapsulate data in composite types.
-- Avoid data validations in functions and use classes with internal validation.
-- Prefer immutability for data.
-  - Use `readonly` for data that doesn't change.
-  - Use `as const` for literals that don't change.
+## Code Style
 
-### Classes
+### TypeScript Guidelines
 
-- Follow SOLID principles.
-- Prefer composition over inheritance.
-- Declare interfaces to define contracts.
-- Write small classes with a single purpose:``
-  - Less than 200 instructions.
-  - Less than 10 public methods.
-  - Less than 10 properties.
+- Use English for all code and documentation
+- Always declare types for variables and functions (parameters and return values)
+- Avoid using `any` - create necessary types instead
+- Use JSDoc to document public classes and methods
+- Don't leave blank lines within functions
+- One export per file
 
-### Exceptions
+### Naming Conventions
 
-- Use exceptions to handle errors you don't expect.
-- If you catch an exception, it should be to:
-  - Fix an expected problem.
-  - Add context.
-  - Otherwise, use a global handler.
+- **PascalCase** for classes and sheet configurations
+- **camelCase** for variables, functions, and methods
+- **kebab-case** for file and directory names
+- **UPPERCASE** for environment variables
+- Start function names with verbs
+- Use verbs for boolean variables (`isLoading`, `hasError`, `canDelete`)
+- Use complete words instead of abbreviations
 
-## Comments and Documentation
+### Function Guidelines
 
-- **Function Comments**: Add a comment at the start of each function or logical code block describing what it does.
-- **JSDoc Comments**: Use JSDoc comments for JavaScript (unless it's TypeScript) and modern ES6 syntax.
+- Write short functions with single purpose (less than 20 instructions)
+- Use early returns to avoid nesting
+- Use arrow functions for simple operations (less than 3 instructions)
+- Use named functions for complex operations
+- Use default parameter values instead of null/undefined checks
 
-## Handling Bugs
+### Formatting
 
-- **TODO Comments**: If you encounter a bug in existing code, or the instructions lead to suboptimal or buggy code, add comments starting with "TODO:" outlining the problems.
+- TypeScript: Uses strict configuration with @total-typescript/tsconfig
+- Biome for linting and formatting
+- 2 spaces indentation
+- Single quotes for strings
+- Semicolons only when needed
+- Trailing commas everywhere
+- 120 character line limit
+- Organize imports enabled
+- No explicit any (warns)
+- No unused variables/imports (errors)
+- No non-null assertions allowed
 
-## Example Pseudocode Plan and Implementation
+## Architecture
 
-When responding to questions, use the Chain of Thought method. Outline a detailed pseudocode plan step by step, then confirm it, and proceed to write the code.
+### Flatfile Development Rules
 
-## Important: Minimal Code Changes
+1. **Custom Validations**: Always use `@flatfile/plugin-constraints` for custom field-level validations
+2. **Record Hooks**: Use `@flatfile/plugin-record-hook` for record-level validations or complex multi-field validations
+3. **Performance**: Choose `recordHook` for individual record validations, `bulkRecordHook` for large datasets
+4. **Blueprint**: Use `external` constraint type to reference custom validations
+5. **Type Safety**: Always use TypeScript for better type safety
 
-- Only modify sections of the code related to the task at hand.
-- Avoid modifying unrelated pieces of code.
-- Avoid changing existing comments.
-- Avoid any kind of cleanup unless specifically instructed to.
-- Accomplish the goal with the minimum amount of code changes.
-- Code change = potential for bugs and technical debt.
+### Event Listener Structure
 
-Follow these guidelines to produce high-quality code and improve your coding skills. If you have any questions or need clarification, don't hesitate to ask!
+```typescript
+export default function(listener: FlatfileListener) {
+  // Global event handling
+  listener.on('**', (event) => {
+    console.log(`Received event: ${event.topic}`)
+  })
 
-## Flatfile Development Rules
+  // Space configuration
+  listener.on('job:ready', { job: 'space:configure' }, async (event) => {
+    // Configure workbooks, sheets, and actions
+  })
 
-1. Always use `@flatfile/plugin-constraints` for custom field-level validations. Do not implement custom validation logic directly in the blueprint.
+  // Data processing hooks
+  listener.use(recordHook('sheetName', (record) => {
+    // Transform and validate data
+  }))
+}
+```
 
-2. For record-level validations or complex multi-field validations, use `@flatfile/plugin-record-hook`.
+### Plugins Used
 
-3. When using `@flatfile/plugin-record-hook`, choose between `recordHook` and `bulkRecordHook` based on the following criteria:
-   - Use `recordHook` for complex validations on individual records.
-   - Use `bulkRecordHook` for performance optimization when dealing with large datasets.
+- `@flatfile/plugin-xlsx-extractor` for Excel file handling
+- `@flatfile/plugin-space-configure` for space configuration
+- `@flatfile/plugin-job-handler` for job processing
+- `@flatfile/plugin-record-hook` for data transformation
 
-4. Always install the required plugins using bun:
-   ```bash
-   bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
-   ```
+## Testing
 
-5. When implementing custom validations, always use TypeScript for better type safety.
+- No specific test framework configured
+- Use `bun run check` to verify TypeScript compilation
+- Manual testing via `bun run dev` for development
+- Test files use `*.test.ts` or `*.spec.ts` naming convention
+- Use descriptive test names without "should" prefix
+- Mock external dependencies appropriately
 
-6. In the blueprint, use the `external` constraint type to reference custom validations defined with `@flatfile/plugin-constraints`.
+## Flatfile Components
 
-7. Keep validation logic modular, reusable, and well-documented.
+### Workbooks and Sheets
 
-8. Handle all possible edge cases in your validation logic, including null and undefined values.
+- Workbooks are like databases with type-strict schemas
+- Sheets are like database tables with field definitions
+- Actions define user-triggered operations
+- Configure in separate files for better organization
 
-9. Implement proper error handling and logging in all custom validations and record hooks.
+### Event System
 
-10. When using `bulkRecordHook`, carefully consider and test the `chunkSize` and `parallel` options to optimize performance without overwhelming system resources.
+- `job:ready` - Handle job execution
+- `commit:created` - Process record changes
+- `workbook:created` - Handle new workbook creation
+- `sheet:updated` - Respond to sheet modifications
 
-11. Do not use deprecated or unsupported validation methods. Always refer to the latest Flatfile documentation for best practices.
+### Data Hooks
 
-## Detailed Sections
+- Use `recordHook` for individual record processing
+- Use `bulkRecordHook` for batch operations
+- Implement `compute`, `computeIfPresent`, and `validate` methods
+- Add informational, warning, and error messages
 
-- See @guides/workbooks/AGENT.md
-- See @guides/actions/AGENT.md
-- See @guides/events/AGENT.md
-- See @guides/jobs/AGENT.md
-- See @guides/listeners/AGENT.md
-- See @guides/data-hooks/AGENT.md
-- See @guides/blueprint-overview/AGENT.md
-- See @guides/sheet-configuration/AGENT.md
-- See @guides/field-types/AGENT.md
-- See @guides/constraints-and-validation/AGENT.md
-- See @guides/relationships/AGENT.md
-- See @guides/best-practices/AGENT.md
-- See @guides/examples/AGENT.md
-- See @guides/space-configuration-plugin/AGENT.md
-- See @guides/job-handler-plugin/AGENT.md
-- See @guides/flatfile-api-package/AGENT.md
-- See @guides/package-usage/AGENT.md
-- See @guides/sheet-configuration/AGENT.md
-- See @guides/workbook-configuration/AGENT.md
-- See @guides/external-validations/AGENT.md
-- See @guides/running-demos/AGENT.md
+## Security
+
+- Never commit API keys or secrets to repository
+- Use environment variables for sensitive data
+- Store credentials in `.env` file (not committed)
+- Validate webhook URLs before deployment
+- Use latest versions of Flatfile dependencies for security patches
+- Validate all user inputs in data hooks
+- Handle edge cases including null and undefined values
+- Implement proper error handling and logging
+
+## Configuration
+
+Before first use:
+1. Copy `.env.example` to `.env`
+2. Add your Flatfile API key and environment ID
+3. Update webhook URL in `src/index.ts` (replace `https://webhook.site/...`)
+
+### Required Packages
+
+```bash
+bun install @flatfile/api @flatfile/listener
+bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
+```
+
+### Environment Setup
+
+- Configure listener entry point in `src/index.ts`
+- Define sheet configurations in `src/blueprints/sheets/`
+- Implement custom validations in handlers
+- Use TypeScript for all configurations
+
+## Deployment
+
+- Use `bun run deploy` to deploy to Flatfile
+- Listeners run in AWS Lambda when deployed
+- Development mode includes additional logging (disabled in production)
+- Use `bun run list` to see deployed listeners
+
+## Best Practices
+
+### File Organization
+
+- One sheet configuration per file
+- Use descriptive file names
+- Export configurations through index files
+- Keep validation logic modular and reusable
+
+### Error Handling
+
+- Use exceptions for unexpected errors
+- Provide clear error messages in validations
+- Handle all edge cases appropriately
+- Implement proper logging
+
+### Performance
+
+- Use appropriate hook types for dataset size
+- Consider performance implications of validations
+- Implement efficient data transformations
+- Test with realistic data volumes
+
+## References
+
+- [Flatfile Documentation](https://flatfile.com/docs)
+- [Workbooks](@guides/workbooks/AGENT.md)
+- [Actions](@guides/actions/AGENT.md)
+- [Events](@guides/events/AGENT.md)
+- [Jobs](@guides/jobs/AGENT.md)
+- [Listeners](@guides/listeners/AGENT.md)
+- [Data Hooks](@guides/data-hooks/AGENT.md)
+- [Blueprint Overview](@guides/blueprint-overview/AGENT.md)
+- [Sheet Configuration](@guides/sheet-configuration/AGENT.md)
+- [Field Types](@guides/field-types/AGENT.md)
+- [Constraints and Validation](@guides/constraints-and-validation/AGENT.md)
+- [Best Practices](@guides/best-practices/AGENT.md)
+- [Examples](@guides/examples/AGENT.md)
+- [Space Configuration Plugin](@guides/space-configuration-plugin/AGENT.md)
+- [Job Handler Plugin](@guides/job-handler-plugin/AGENT.md)
+- [Flatfile API Package](@guides/flatfile-api-package/AGENT.md)
+- [Package Usage](@guides/package-usage/AGENT.md)
+- [Workbook Configuration](@guides/workbook-configuration/AGENT.md)
+- [External Validations](@guides/external-validations/AGENT.md)
