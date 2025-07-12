@@ -1,7 +1,7 @@
 # Actions
 
 
-Actions are code-based operations that run when triggered by user interaction in Flatfile. They can be mounted on Sheets, Workbooks, or files, providing a flexible way to implement custom functionality.
+Actions are code-based operations that run when triggered by user interaction in Flatfile. They can be mounted on Spaces, Workbooks, Sheets, or Fields, providing a flexible way to implement custom functionality.
 
 ### Types of Actions
 
@@ -27,147 +27,149 @@ When triggered, these actions create jobs with names following the pattern: `{do
 
 #### Required Parameters
 
-    {
-      // Unique identifier used by the listener
-      operation: "submit-data",
-      
-      // UI display text
-      label: "Submit Data"
-    }
-    
-
+```typescript
+{
+  // Unique identifier used by the listener
+  operation: 'submit-data',
+  
+  // UI display text
+  label: 'Submit Data'
+}
+```
 #### Optional Parameters
 
-    {
-      // Makes the action more prominent in UI
-      primary: true,
-      
-      // Shows confirmation modal
-      confirm: true,
-      
-      // Confirmation modal text
-      description: "Are you sure you want to submit this data?",
-      
-      // UI icon (default: lightning bolt)
-      icon: "upload",
-      
-      // Hover tooltip
-      tooltip: "Submit data to external API",
-      
-      // Tooltip messages for different states
-      messages: [
-        { type: "error", message: "Cannot submit invalid data" },
-        { type: "info", message: "Ready to submit" }
-      ],
-      
-      // Action constraints
-      constraints: [
-        { type: "hasAllValid" },    // Requires all records valid
-        { type: "hasSelection" },   // Requires selected records
-        { type: "hasData" }         // Requires data present
-      ],
-      
-      // Action execution mode
-      mode: "background"  // or "foreground" or "toolbarBlocking"
-    }
-    
+```typescript
+{
+  // Makes the action more prominent in UI
+  primary: true,
+  
+  // Shows confirmation modal
+  confirm: true,
+  
+  // Confirmation modal text
+  description: 'Are you sure you want to submit this data?',
+  
+  // UI icon (default: lightning bolt)
+  icon: 'upload',
+  
+  // Hover tooltip
+  tooltip: 'Submit data to external API',
+  
+  // Tooltip messages for different states
+  messages: [
+    { type: 'error', message: 'Cannot submit invalid data' },
+    { type: 'info', message: 'Ready to submit' }
+  ],
+  
+  // Action constraints
+  constraints: [
+    { type: 'hasAllValid' },    // Requires all records valid
+    { type: 'hasSelection' },   // Requires selected records
+    { type: 'hasData' }         // Requires data present
+  ],
+  
+  // Action execution mode
+  mode: 'background'  // or 'foreground' or 'toolbarBlocking'
+}
+```
 
 ### Input Forms
 
 Actions can request additional information from users through input forms:
 
-    {
-      operation: "export-data",
-      label: "Export Data",
-      inputForm: {
-        type: "simple",
-        fields: [
-          {
-            key: "fileName",
-            label: "File Name",
-            type: "string",
-            description: "Name for the exported file",
-            defaultValue: "export",
-            constraints: [{ type: "required" }]
-          },
-          {
-            key: "format",
-            label: "Export Format",
-            type: "enum",
-            description: "Choose export format",
-            config: {
-              options: [
-                {
-                  value: "csv",
-                  label: "CSV",
-                  description: "Comma-separated values"
-                },
-                {
-                  value: "json",
-                  label: "JSON",
-                  description: "JavaScript Object Notation"
-                }
-              ]
+```typescript
+{
+  operation: 'export-data',
+  label: 'Export Data',
+  inputForm: {
+    type: 'simple',
+    fields: [
+      {
+        key: 'fileName',
+        label: 'File Name',
+        type: 'string',
+        description: 'Name for the exported file',
+        defaultValue: 'export',
+        constraints: [{ type: 'required' }]
+      },
+      {
+        key: 'format',
+        label: 'Export Format',
+        type: 'enum',
+        description: 'Choose export format',
+        config: {
+          options: [
+            {
+              value: 'csv',
+              label: 'CSV',
+              description: 'Comma-separated values'
             },
-            constraints: [{ type: "required" }]
-          }
-        ]
+            {
+              value: 'json',
+              label: 'JSON',
+              description: 'JavaScript Object Notation'
+            }
+          ]
+        },
+        constraints: [{ type: 'required' }]
       }
-    }
-    
+    ]
+  }
+}
+```
 
 ### Complete Action Example
 
-    export const submitAction = {
-      operation: "submit-data",
-      label: "Submit Data",
-      primary: true,
-      confirm: true,
-      description: "Submit this data to the external API?",
-      icon: "upload",
-      tooltip: "Submit validated data",
-      constraints: [
-        { type: "hasAllValid" },
-        { type: "hasData" }
-      ],
-      mode: "foreground",
-      inputForm: {
-        type: "simple",
-        fields: [
-          {
-            key: "priority",
-            label: "Priority Level",
-            type: "enum",
-            description: "Set the processing priority",
-            defaultValue: "normal",
-            config: {
-              options: [
-                {
-                  value: "high",
-                  label: "High Priority",
-                  description: "Process immediately"
-                },
-                {
-                  value: "normal",
-                  label: "Normal Priority",
-                  description: "Process in order"
-                }
-              ]
+```typescript
+export const submitAction = {
+  operation: 'submit-data',
+  label: 'Submit Data',
+  primary: true,
+  confirm: true,
+  description: 'Submit this data to the external API?',
+  icon: 'upload',
+  tooltip: 'Submit validated data',
+  constraints: [
+    { type: 'hasAllValid' },
+    { type: 'hasData' }
+  ],
+  mode: 'foreground',
+  inputForm: {
+    type: 'simple',
+    fields: [
+      {
+        key: 'priority',
+        label: 'Priority Level',
+        type: 'enum',
+        description: 'Set the processing priority',
+        defaultValue: 'normal',
+        config: {
+          options: [
+            {
+              value: 'high',
+              label: 'High Priority',
+              description: 'Process immediately'
             },
-            constraints: [{ type: "required" }]
-          }
-        ]
+            {
+              value: 'normal',
+              label: 'Normal Priority',
+              description: 'Process in order'
+            }
+          ]
+        },
+        constraints: [{ type: 'required' }]
       }
-    };
-    
-    // Using the action in a workbook
-    export const workbook: {
-      name: "Data Import",
-      sheets: [...],
-      actions: [submitAction]
-    };
-    
+    ]
+  }
+}
 
+// Using the action in a workbook
+export const workbook: {
+  name: 'Data Import',
+  sheets: [...],
+  actions: [submitAction]
+}
+```
 ### Best Practices for Actions
 
 1. **Naming and Organization**

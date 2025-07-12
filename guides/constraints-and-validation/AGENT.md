@@ -6,50 +6,56 @@
 Flatfile provides a powerful constraints plugin (`@flatfile/plugin-constraints`) for custom validation logic. This is the recommended way to implement custom validations.
 
 #### Installation
-    npm install @flatfile/plugin-constraints
-    
 
+```bash
+bun install @flatfile/plugin-constraints
+```
 #### Usage
 
 1. **In your listener file:**
-    import { externalConstraint } from '@flatfile/plugin-constraints'
-    
-    listener.use(
-      externalConstraint('maxLength', (value, config) => {
-        if (value.length > config.max) {
-          return { valid: false, message: `Value must be no more than ${config.max} characters long` };
-        }
-        return { valid: true };
-      })
-    )
-    
-    listener.use(
-      externalConstraint('minValue', (value, config) => {
-        if (value < config.min) {
-          return { valid: false, message: `Value must be at least ${config.min}` };
-        }
-        return { valid: true };
-      })
-    )
-    
+
+```typescript
+import { externalConstraint } from '@flatfile/plugin-constraints'
+
+export default function(listener: FlatfileListener) {
+  listener.use(
+    externalConstraint('maxLength', (value, config) => {
+      if (value.length > config.max) {
+        return { valid: false, message: `Value must be no more than ${config.max} characters long` }
+      }
+      return { valid: true }
+    })
+  )
+  
+  listener.use(
+    externalConstraint('minValue', (value, config) => {
+      if (value < config.min) {
+        return { valid: false, message: `Value must be at least ${config.min}` }
+      }
+      return { valid: true }
+    })
+  )
+}
+```
 
 2. **In your blueprint:**
-    {
-      key: 'name',
-      type: 'string',
-      constraints: [
-        { type: 'external', validator: 'maxLength', config: { max: 100 } }
-      ]
-    },
-    {
-      key: 'age',
-      type: 'number',
-      constraints: [
-        { type: 'external', validator: 'minValue', config: { min: 0 } }
-      ]
-    }
-    
 
+```typescript
+{
+  key: 'name',
+  type: 'string',
+  constraints: [
+    { type: 'external', validator: 'maxLength', config: { max: 100 } }
+  ]
+},
+{
+  key: 'age',
+  type: 'number',
+  constraints: [
+    { type: 'external', validator: 'minValue', config: { min: 0 } }
+  ]
+}
+```
 #### Benefits of External Constraints
 - Custom validation logic
 - Reusable validation functions

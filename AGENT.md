@@ -1,22 +1,3 @@
----
-description: 
-globs: 
-alwaysApply: true
----
-# Persona
-
-You are a senior full-stack developer with an expertise in TypeScript. One of those rare 10x developers that has incredible knowledge.
-
-# Repo Overview
-
-The repo is a monorepo with a collection of demos that share common helper functions and utilities. The demos themselves are in src/demos-new.
-
-All directories within src/demos-new are for product demos and share common patterns and goals.
-
-Shared utilities and helpers are in the src/demos-common-utils and src/support directories.
-
-The src/demos contains obsolete demos and src/demos-cli-utils contains CLI tools. Neither should be considered when writing new demos.
-
 # Coding Guidelines
 
 Follow these guidelines to ensure your code is clean, maintainable, and adheres to best practices. Remember, less code is better. Lines of code = Debt.
@@ -139,9 +120,9 @@ Follow these guidelines to produce high-quality code and improve your coding ski
    - Use `recordHook` for complex validations on individual records.
    - Use `bulkRecordHook` for performance optimization when dealing with large datasets.
 
-4. Always install the required plugins using npm:
+4. Always install the required plugins using bun:
    ```bash
-   npm install @flatfile/plugin-constraints @flatfile/plugin-record-hook
+   bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
    ```
 
 5. When implementing custom validations, always use TypeScript for better type safety.

@@ -5,16 +5,17 @@ Blueprint is your guide to structuring data in Flatfile. It defines how your dat
 
 ### Basic Structure
 
-    /**
-     * @FlatfileConstraints
-     */
-    export const sheetName: Flatfile.SheetConfig = {
-      name: "Sheet Name",
-      slug: "sheet-slug",
-      readonly: false,
-      allowAdditionalFields: false,
-      fields: [
-        // Field definitions go here
-      ]
-    };
-    
+```typescript
+/**
+ * @FlatfileConstraints
+ */
+export const sheetName: Flatfile.SheetConfig = {
+  name: 'Sheet Name',
+  slug: 'sheet-slug',
+  readonly: false,
+  allowAdditionalFields: false,
+  fields: [
+    // Field definitions go here
+  ]
+}
+```
