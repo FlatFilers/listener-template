@@ -1,6 +1,6 @@
-# @flatfile/listener-template
+# Flatfile Listener
 
-This is a template for creating a Flatfile listener. It's a simple listener that configure a space, extract XLSX files, perform a simple data hook action on the default sheet, and submit the Workbook data to a webhook url.
+This is a Flatfile listener that uses the core patterns for building event-driven data import workflows. Listeners are the foundation of Flatfile's architecture—they respond to events throughout the data import lifecycle and enable all the powerful functionality in your Flatfile implementation.
 
 ## Getting Started
 
