@@ -56,12 +56,27 @@ export function reconfigureSpace(
           matches.map(async ({ existingWorkbook, configIndex }) => {
             const workbookConfig = setup.workbooks[configIndex]
 
+            // Get existing sheets in the workbook
+            const existingSheetsResponse = await api.sheets.list({
+              workbookId: existingWorkbook.id,
+            })
+            const existingSheets = existingSheetsResponse.data
+
             // Update the workbook with new configuration
             // Note: This will replace all sheets with the new configuration
             await api.workbooks.update(existingWorkbook.id, {
               environmentId,
               ...workbookConfig,
             })
+
+            // Delete sheets that are no longer in the configuration
+            const newSheetSlugs = new Set(workbookConfig?.sheets?.map((sheet) => sheet.slug) || [])
+            for (const existingSheet of existingSheets) {
+              if (!newSheetSlugs.has(existingSheet.config.slug)) {
+                await api.sheets.delete(existingSheet.id)
+              }
+            }
+
             return existingWorkbook.id
           }),
         )
