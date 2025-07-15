@@ -242,3 +242,5 @@ bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
 - [Package Usage](@guides/package-usage/AGENT.md)
 - [Workbook Configuration](@guides/workbook-configuration/AGENT.md)
 - [External Validations](@guides/external-validations/AGENT.md)
+- [Plugins](@guides/plugins/AGENT.md)
+- [Building Extractors](@guides/building-extractors/AGENT.md)
