@@ -46,7 +46,6 @@ export default function(listener) {
             spaceId,
             environmentId,
             name: 'All Data',
-            labels: ['pinned'],
             sheets: [
               {
                 name: 'Contacts',
