@@ -64,6 +64,8 @@ export function reconfigureSpace(
 
         await tick(40, 'Creating new workbooks')
 
+        console.log('unmatchedConfigs', unmatchedConfigs)
+
         // Create new workbooks for unmatched configurations
         const newWorkbookIds = await Promise.all(
           unmatchedConfigs.map(async ({ config }) => {
@@ -73,6 +75,7 @@ export function reconfigureSpace(
               name: 'Workbook',
               ...config,
             })
+            console.log('created workbook', workbook)
             return workbook.data.id
           }),
         )
