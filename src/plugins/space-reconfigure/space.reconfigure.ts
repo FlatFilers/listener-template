@@ -2,7 +2,8 @@ import type { Flatfile } from '@flatfile/api'
 import { FlatfileClient } from '@flatfile/api'
 import type { FlatfileEvent, FlatfileListener } from '@flatfile/listener'
 import { jobHandler, type TickFunction } from '@flatfile/plugin-job-handler'
-import { matchWorkbooks } from './workbook.matching'
+import { matchDocuments } from './utils/document.matching'
+import { matchWorkbooks } from './utils/workbook.matching'
 
 const api = new FlatfileClient()
 
@@ -31,7 +32,7 @@ export function reconfigureSpace(
 ) {
   return (listener: FlatfileListener) => {
     listener.use(
-      jobHandler('space:reconfigure', async (event, tick) => {
+      jobHandler('workbook:reconfigure', async (event, tick) => {
         const { spaceId, environmentId } = event.context
         const setup = typeof setupFactory === 'function' ? await setupFactory(event) : setupFactory
 
@@ -46,14 +47,17 @@ export function reconfigureSpace(
         await tick(20, 'Matching workbooks to configuration')
 
         // Match workbook configurations to existing workbooks
-        const { matches, unmatchedConfigs } = matchWorkbooks(existingWorkbooks, setup.workbooks)
+        const { matches, unmatchedConfigs, workbooksToDelete } = matchWorkbooks(existingWorkbooks, setup.workbooks)
 
         await tick(30, 'Updating existing workbooks')
 
-        // Update existing workbooks
+        // Update existing workbooks (this replaces all sheets with new configuration)
         const updatedWorkbookIds = await Promise.all(
           matches.map(async ({ existingWorkbook, configIndex }) => {
             const workbookConfig = setup.workbooks[configIndex]
+
+            // Update the workbook with new configuration
+            // Note: This will replace all sheets with the new configuration
             await api.workbooks.update(existingWorkbook.id, {
               environmentId,
               ...workbookConfig,
@@ -62,9 +66,14 @@ export function reconfigureSpace(
           }),
         )
 
-        await tick(40, 'Creating new workbooks')
+        await tick(40, 'Deleting removed workbooks')
 
-        console.log('unmatchedConfigs', unmatchedConfigs)
+        // Delete workbooks that are no longer in the configuration
+        for (const workbookToDelete of workbooksToDelete) {
+          await api.workbooks.delete(workbookToDelete.id)
+        }
+
+        await tick(45, 'Creating new workbooks')
 
         // Create new workbooks for unmatched configurations
         const newWorkbookIds = await Promise.all(
@@ -75,7 +84,6 @@ export function reconfigureSpace(
               name: 'Workbook',
               ...config,
             })
-            console.log('created workbook', workbook)
             return workbook.data.id
           }),
         )
@@ -105,12 +113,45 @@ export function reconfigureSpace(
           ...setup.space,
         })
 
-        await tick(70, 'Updating documents')
+        await tick(70, 'Managing documents')
 
-        // Handle documents
+        // Handle documents with full CRUD operations
         if (setup.documents) {
-          for (const document of setup.documents) {
-            await api.documents.create(spaceId, document)
+          // Fetch existing documents
+          const existingDocumentsResponse = await api.documents.list(spaceId)
+          const existingDocuments = existingDocumentsResponse.data
+
+          // Match documents to configuration
+          const {
+            matches: documentMatches,
+            unmatchedConfigs: newDocuments,
+            documentsToDelete,
+          } = matchDocuments(existingDocuments, setup.documents)
+
+          // Update existing documents
+          for (const { existingDocument, configIndex } of documentMatches) {
+            const documentConfig = setup.documents[configIndex]
+            if (documentConfig) {
+              await api.documents.update(spaceId, existingDocument.id, documentConfig)
+            }
+          }
+
+          // Delete documents not in configuration
+          for (const documentToDelete of documentsToDelete) {
+            await api.documents.delete(spaceId, documentToDelete.id)
+          }
+
+          // Create new documents
+          for (const { config: newDocumentConfig } of newDocuments) {
+            await api.documents.create(spaceId, newDocumentConfig)
+          }
+        } else {
+          // If no documents in setup, delete all existing documents
+          const existingDocumentsResponse = await api.documents.list(spaceId)
+          const existingDocuments = existingDocumentsResponse.data
+
+          for (const documentToDelete of existingDocuments) {
+            await api.documents.delete(spaceId, documentToDelete.id)
           }
         }
 
