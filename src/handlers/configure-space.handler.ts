@@ -1,8 +1,8 @@
 import { configureSpace } from '@flatfile/plugin-space-configure'
-import { space } from '../blueprints/space'
-import { defaultWorkbook } from '../blueprints/workbooks/default.workbook'
+import { spaceConfig } from '../blueprints/spaceConfig'
+import { defaultWorkbook } from '../blueprints/workbooks'
 
-export const spaceConfig = configureSpace({
+export const configureSpaceHandler = configureSpace({
   workbooks: [defaultWorkbook],
-  space,
+  space: spaceConfig,
 })

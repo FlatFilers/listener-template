@@ -1,6 +1,6 @@
 import type { Flatfile } from '@flatfile/api'
 
-export const space: Partial<Flatfile.SpaceConfig> = {
+export const spaceConfig: Partial<Flatfile.SpaceConfig> = {
   metadata: {
     theme: {
       root: {

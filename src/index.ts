@@ -1,14 +1,14 @@
 import '@flatfile/http-logger/init'
 import type FlatfileListener from '@flatfile/listener'
 import { ExcelExtractor } from '@flatfile/plugin-xlsx-extractor'
-import { spaceConfig } from './handlers/configure-space.handler'
+import { configureSpaceHandler } from './handlers/configure-space.handler'
 import { demoHook } from './handlers/demo-hook.handler'
-import { spaceReconfigure } from './handlers/reconfigure-space.handler'
+import { reconfigureSpaceHandler } from './handlers/reconfigure-space.handler'
 import { submitListener } from './handlers/submit-action.handler'
 
 export default function (listener: FlatfileListener) {
-  listener.use(spaceConfig)
-  listener.use(spaceReconfigure)
+  listener.use(configureSpaceHandler)
+  listener.use(reconfigureSpaceHandler)
 
   listener.use(ExcelExtractor())
 

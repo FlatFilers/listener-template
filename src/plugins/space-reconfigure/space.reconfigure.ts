@@ -32,7 +32,7 @@ export function reconfigureSpace(
 ) {
   return (listener: FlatfileListener) => {
     listener.use(
-      jobHandler('workbook:reconfigure', async (event, tick) => {
+      jobHandler('space:reconfigure', async (event, tick) => {
         const { spaceId, environmentId } = event.context
         const setup = typeof setupFactory === 'function' ? await setupFactory(event) : setupFactory
 
