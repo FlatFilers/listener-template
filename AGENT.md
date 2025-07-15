@@ -4,7 +4,7 @@ This is a Flatfile listener that uses the core patterns for building event-drive
 
 ## About Listeners
 
-Listeners are functions you write that respond to Events by executing custom code. They define how your Spaces behave and what happens when users interact with your data. This listener shows how to handle the most common listener patterns:
+Listeners are functions you write that respond to Events by executing custom code. They define how your Spaces behave and what happens when users interact with your data. Listeners will be deployed and run on an AWS Lambda. This listener shows how to handle the most common listener patterns:
 
 - **Space Configuration**: Setting up workbooks, sheets, actions, and themes
 - **Data Validation**: Custom field and record-level validation using hooks
