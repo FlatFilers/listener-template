@@ -42,7 +42,7 @@ A property that should be stored and read as either an integer or floating point
   label: 'Price',
   description: 'Product price',
   config: {
-    decimal_places: 2
+    decimalPlaces: 2
   }
 }
 ```
