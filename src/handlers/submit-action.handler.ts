@@ -1,12 +1,15 @@
 import { type Flatfile, FlatfileClient } from '@flatfile/api'
 import type { FlatfileEvent } from '@flatfile/listener'
 import { jobHandler, type TickFunction } from '@flatfile/plugin-job-handler'
-import { submitWorkbook } from '../blueprints/actions/submit.action'
+import { submitWorkbookAction } from '../blueprints/actions/submit-workbook.action'
 
 const api = new FlatfileClient()
 
-export const submitListener = (webhookUrl: string) =>
-  jobHandler(`workbook:${submitWorkbook.operation}`, async (event: FlatfileEvent, tick: TickFunction) => {
+export const submitActionHandler = jobHandler(
+  `workbook:${submitWorkbookAction.operation}`,
+  async (event: FlatfileEvent, tick: TickFunction) => {
+    // TODO: Replace with your webhook url
+    const webhookUrl = 'https://webhook.site/...'
     const { payload } = event
     const { workbookId } = event.context
 
@@ -51,4 +54,5 @@ export const submitListener = (webhookUrl: string) =>
       // If an error is thrown, fail the job by throwing an error
       throw new Error(`Job failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
-  })
+  },
+)

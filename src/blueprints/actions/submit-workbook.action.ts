@@ -1,6 +1,6 @@
 import { Flatfile } from '@flatfile/api'
 
-export const submitWorkbook: Flatfile.Action = {
+export const submitWorkbookAction: Flatfile.Action = {
   operation: 'submit',
   mode: Flatfile.ActionMode.Foreground,
   label: 'Submit',

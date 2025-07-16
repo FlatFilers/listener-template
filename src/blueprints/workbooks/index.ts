@@ -1,1 +1,3 @@
-export { defaultWorkbook } from './default.workbook'
+import { defaultWorkbook } from './default.workbook'
+
+export const workbooks = [defaultWorkbook]
