@@ -18,6 +18,7 @@
     "@flatfile/api": "latest",
     "@flatfile/http-logger": "latest",
     "@flatfile/listener": "latest",
+    "@flatfile/plugin-constraints": "latest",
     "@flatfile/plugin-job-handler": "latest",
     "@flatfile/plugin-record-hook": "latest",
     "@flatfile/plugin-space-configure": "latest",

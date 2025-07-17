@@ -13,6 +13,7 @@ export const exampleSheet: Flatfile.SheetConfig = {
       key: 'email',
       type: 'string',
       label: 'Email',
+      constraints: [{ type: 'external', validator: 'validator-identifier', config: { someConfigValue: '@' } }],
     },
     {
       key: 'phone',

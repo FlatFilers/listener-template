@@ -7,6 +7,7 @@
         "@flatfile/api": "latest",
         "@flatfile/http-logger": "latest",
         "@flatfile/listener": "latest",
+        "@flatfile/plugin-constraints": "latest",
         "@flatfile/plugin-job-handler": "latest",
         "@flatfile/plugin-record-hook": "latest",
         "@flatfile/plugin-space-configure": "latest",
@@ -168,6 +169,8 @@
     "@flatfile/listener": ["@flatfile/listener@1.1.2", "", { "dependencies": { "ansi-colors": "^4.1.3", "cross-fetch": "^4.0.0", "flat": "^5.0.2", "pako": "^2.1.0", "wildcard-match": "^5.1.2" }, "peerDependencies": { "@flatfile/api": "^1.8.5" } }, "sha512-o3TRaZY/S/7/nCA+ZKrLU8fMb4rRcpp6tNUaZw4ufNEg7WZR7dv654weG61r7hHHGTMUzHn3diAu8o1BXPmtfg=="],
 
     "@flatfile/listener-driver-pubsub": ["@flatfile/listener-driver-pubsub@2.1.0", "", { "dependencies": { "@flatfile/api": "^1.8.9", "@flatfile/listener": "^1.0.5", "@flatfile/utils-debugger": "^0.0.6", "axios": "^1.6.0", "pubnub": "^8.2.0" } }, "sha512-ZoVwcc5kAqlLMG0/RQyiQittC1Wqc/hM+e2/OqPg7UIeZiLvokwrVTnwHy+4ypVTv8ZVTF40tHj0/KIWjXJoIA=="],
+
+    "@flatfile/plugin-constraints": ["@flatfile/plugin-constraints@8.0.2", "", { "peerDependencies": { "@flatfile/api": "^1.9.19", "@flatfile/listener": "^1.1.0", "@flatfile/plugin-record-hook": "^2.0.0" } }, "sha512-IUM3zBHy41sbP+n4KTVL/XOOFJz/UkiAj90HoXC1+8qrDY2RPhsLn0LBNSMPDRzCmVRekV/cGPJ7vqFIzfTNpw=="],
 
     "@flatfile/plugin-job-handler": ["@flatfile/plugin-job-handler@0.8.1", "", { "dependencies": { "@flatfile/util-common": "^1.6.0" }, "peerDependencies": { "@flatfile/api": "^1.9.19", "@flatfile/listener": "^1.1.0" } }, "sha512-D1rBrLhMlvdS82AIKX2c2D5xPMc6R/TKY70Ar+UBWNIrt7dn+qRd94VrrN2tih+sieCN1FHdQCdH+xWRkBKX2Q=="],
 
