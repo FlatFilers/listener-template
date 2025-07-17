@@ -1,3 +1,1 @@
-import { exampleSheet } from './example.sheet'
-
-export const sheets = [exampleSheet]
+export { exampleSheet } from './example.sheet'
