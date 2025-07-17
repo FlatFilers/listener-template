@@ -1,9 +1,9 @@
 import type { FlatfileEvent } from '@flatfile/listener'
 import { bulkRecordHook, type FlatfileRecord } from '@flatfile/plugin-record-hook'
 
-// This is an example data hook that will be called when a record is created or updated on the default sheet with slug 'demo'
-export const demoRecordHookHandler = bulkRecordHook(
-  'demo',
+// This is an example data hook that will be called when a record is created or updated on the default sheet with slug 'example-sheet'
+export const exampleRecordHookHandler = bulkRecordHook(
+  'example-sheet',
   async (records: FlatfileRecord[], _event: FlatfileEvent) => {
     records.forEach((record) => {
       const name: string = record.get('name') as string

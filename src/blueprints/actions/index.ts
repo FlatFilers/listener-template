@@ -1,3 +1,1 @@
-import { submitWorkbookAction } from './submit-workbook.action'
-
-export const actions = [submitWorkbookAction]
+export { submitWorkbookAction } from './submit-workbook.action'
