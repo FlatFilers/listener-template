@@ -1,6 +1,6 @@
 import type { Flatfile } from '@flatfile/api'
-import { exampleWorkbookAction } from '../actions/example-workbook.action'
-import { exampleSheet } from '../sheets/example.sheet'
+import { exampleWorkbookAction } from '../actions/example-workbook-action.config'
+import { exampleSheet } from '../sheets/example-sheet.config'
 
 export const defaultWorkbook: Flatfile.CreateWorkbookConfig = {
   name: 'Workbook',
