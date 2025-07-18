@@ -35,7 +35,7 @@ export const Products: Flatfile.SheetConfig = {
       label: 'Price',
       description: 'Product price',
       config: {
-        decimal_places: 2
+        decimalPlaces: 2
       },
       constraints: [
         { type: 'required' },
@@ -111,7 +111,7 @@ export const OrderLines: Flatfile.SheetConfig = {
       label: 'Unit Price',
       description: 'Price per unit',
       config: {
-        decimal_places: 2
+        decimalPlaces: 2
       },
       constraints: [
         { type: 'required' },
