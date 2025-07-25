@@ -50,7 +50,7 @@ A property that should be stored and read as either an integer or floating point
 
 Defines an enumerated list of options for the user to select from. The maximum number of options for this list is 100.
 
-`config.allow_custom`
+`config.allowCustom`
 Permit the user to create new options for this specific field.
 
 `config.sortBy`
