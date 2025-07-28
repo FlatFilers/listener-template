@@ -180,7 +180,7 @@ Before first use:
 ### Required Packages
 
 ```bash
-bun install @flatfile/api @flatfile/listener
+bun install @flatfile/safe-api @flatfile/records @flatfile/listener
 bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
 ```
 

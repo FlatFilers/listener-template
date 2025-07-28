@@ -23,6 +23,7 @@
     "@flatfile/plugin-record-hook": "latest",
     "@flatfile/plugin-space-configure": "latest",
     "@flatfile/plugin-xlsx-extractor": "latest",
+    "@flatfile/safe-api": "latest",
     "@flatfile/utils-debugger": "latest"
   },
   "devDependencies": {

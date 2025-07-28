@@ -16,12 +16,13 @@ Flatfile provides five default actions:
 These actions create Jobs when triggered, which can be monitored and handled through event listeners.
 
 #### Developer-Created Actions
-Custom actions can be mounted at various levels:
-- Sheet level
-- Workbook level
-- File level
+Custom actions can be mounted to various resources:
+- Sheets
+- Workbooks
+- Files
+- Documents
 
-When triggered, these actions create jobs with names following the pattern: `{domain}:{operation}` (e.g., `workbook:my-action`).
+When triggered, these actions create jobs with names following the pattern: `{resource}:{operation}` (e.g., `workbook:my-action`).
 
 ### Action Configuration
 
