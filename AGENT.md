@@ -56,6 +56,8 @@ src/
 - Use JSDoc to document public classes and methods
 - Don't leave blank lines within functions
 - One export per file
+- Use `Number.isNaN()` instead of `isNaN()` for strict NaN checking
+- Handle `undefined` values from `record.get()` with `|| ''` or `?? ''`
 
 ### Naming Conventions
 
