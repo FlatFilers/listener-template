@@ -8,7 +8,7 @@
   "license": "ISC",
   "scripts": {
     "dev": "flatfile develop",
-    "deploy": "bun flatfile deploy",
+    "deploy": "flatfile deploy",
     "list": "flatfile list",
     "delete": "flatfile delete",
     "check": "biome check && tsc --noEmit",
@@ -30,7 +30,7 @@
     "@biomejs/biome": "2.1.1",
     "@total-typescript/tsconfig": "latest",
     "@types/bun": "latest",
-    "flatfile": "4.0.0-rc.0"
+    "flatfile": "^3.11.1"
   },
   "peerDependencies": {
     "typescript": "latest"
