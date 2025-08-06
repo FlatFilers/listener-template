@@ -1,7 +1,12 @@
 import '@flatfile/http-logger/init'
 import type FlatfileListener from '@flatfile/listener'
 import { ExcelExtractor } from '@flatfile/plugin-xlsx-extractor'
-import { externalConstraintHandlers, jobHandlers, recordHookHandlers, requiredHandlers } from './handlers'
+import {
+  externalConstraintHandlers,
+  jobHandlers,
+  recordHookHandlers,
+  requiredHandlers,
+} from './handlers'
 
 export default function (listener: FlatfileListener) {
   requiredHandlers.forEach((handler) => listener.use(handler))

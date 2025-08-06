@@ -21,6 +21,7 @@
     "@flatfile/plugin-constraints": "latest",
     "@flatfile/plugin-job-handler": "latest",
     "@flatfile/plugin-record-hook": "latest",
+    "@flatfile/plugin-rollout": "latest",
     "@flatfile/plugin-space-configure": "latest",
     "@flatfile/plugin-xlsx-extractor": "latest",
     "@flatfile/safe-api": "latest",
