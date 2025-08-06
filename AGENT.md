@@ -4,7 +4,7 @@ This is a Flatfile listener that uses the core patterns for building event-drive
 
 ## About Listeners
 
-Listeners are functions you write that respond to Events by executing custom code. They define how your Spaces behave and what happens when users interact with your data. This listener shows how to handle the most common listener patterns:
+Listeners are functions you write that respond to Events by executing custom code. They define how your Spaces behave and what happens when users interact with your data. Listeners will be deployed and run on an AWS Lambda. This listener shows how to handle the most common listener patterns:
 
 - **Space Configuration**: Setting up workbooks, sheets, actions, and themes
 - **Data Validation**: Custom field and record-level validation using hooks
@@ -56,6 +56,8 @@ src/
 - Use JSDoc to document public classes and methods
 - Don't leave blank lines within functions
 - One export per file
+- Use `Number.isNaN()` instead of `isNaN()` for strict NaN checking
+- Handle `undefined` values from `record.get()` with `|| ''` or `?? ''`
 
 ### Naming Conventions
 
@@ -180,7 +182,7 @@ Before first use:
 ### Required Packages
 
 ```bash
-bun install @flatfile/api @flatfile/listener
+bun install @flatfile/safe-api @flatfile/records @flatfile/listener
 bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
 ```
 
@@ -242,3 +244,5 @@ bun install @flatfile/plugin-constraints @flatfile/plugin-record-hook
 - [Package Usage](@guides/package-usage/AGENT.md)
 - [Workbook Configuration](@guides/workbook-configuration/AGENT.md)
 - [External Validations](@guides/external-validations/AGENT.md)
+- [Plugins](@guides/plugins/AGENT.md)
+- [Building Extractors](@guides/building-extractors/AGENT.md)

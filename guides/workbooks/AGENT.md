@@ -20,7 +20,6 @@ import { Flatfile } from '@flatfile/api'
 
 const workbook = {
   name: 'Data Import Workbook',
-  labels: ['pinned'],
   sheets: [
     // Array of Sheet configurations
   ],
@@ -114,7 +113,6 @@ labels: [
 ```typescript
 export const importWorkbook = {
   name: 'Product Import System',
-  labels: ['pinned'],
   sheets: [
     Products,  // Sheet configuration from separate file
     Categories,  // Sheet configuration from separate file

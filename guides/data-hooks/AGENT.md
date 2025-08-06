@@ -33,8 +33,11 @@ listener.use(
   recordHook('contacts', (record) => {
     record.compute(
       'email',
-      (email, record) => 
-        `${record.get('firstName')}${record.get('lastName')}@gmail.com`,
+      (email, record) => {
+        const firstName = record.get('firstName') || ''
+        const lastName = record.get('lastName') || ''
+        return `${firstName}${lastName}@gmail.com`
+      },
       'Email was generated from first and last name.'
     )
     return record
@@ -155,7 +158,7 @@ listener.use(
     const country = record.get('country')
     const zipCode = record.get('zipCode')
 
-    if (country === 'US' && !/^\d{5}(-\d{4})?$/.test(zipCode)) {
+    if (country === 'US' && zipCode && !/^\d{5}(-\d{4})?$/.test(zipCode)) {
       record.addError(
         'zipCode',
         'Invalid US ZIP code format'
@@ -186,6 +189,74 @@ listener.use(
   })
 )
 ```
+### TypeScript Handling
+
+#### Null/Undefined Values
+
+`record.get()` can return `undefined`, so always handle this in TypeScript:
+
+```typescript
+listener.use(
+  recordHook('contacts', (record) => {
+    // WRONG - will cause TypeScript error
+    const firstName = record.get('firstName') // string | undefined
+    const lastName = record.get('lastName')   // string | undefined
+    record.compute(
+      'fullName',
+      () => `${firstName} ${lastName}`, // ERROR: undefined not assignable to string
+      'Full name computed'
+    )
+
+    // CORRECT - handle undefined values
+    const firstName = record.get('firstName') || ''
+    const lastName = record.get('lastName') || ''
+    record.compute(
+      'fullName',
+      () => `${firstName} ${lastName}`.trim(),
+      'Full name computed'
+    )
+
+    // ALTERNATIVE - use optional chaining and nullish coalescing
+    record.compute(
+      'email',
+      (_, record) => {
+        const firstName = record.get('firstName') ?? ''
+        const lastName = record.get('lastName') ?? ''
+        return `${firstName}${lastName}@example.com`.toLowerCase()
+      },
+      'Email generated from name fields'
+    )
+
+    return record
+  })
+)
+```
+
+#### Type Assertions
+
+When you're certain a value exists, you can use type assertions:
+
+```typescript
+listener.use(
+  recordHook('orders', (record) => {
+    // Only use non-null assertion when you're certain the value exists
+    const requiredField = record.get('requiredField')!
+    
+    // Better approach - check first
+    const price = record.get('price')
+    if (price !== undefined) {
+      record.compute(
+        'formattedPrice',
+        () => `$${Number(price).toFixed(2)}`,
+        'Price formatted with currency'
+      )
+    }
+
+    return record
+  })
+)
+```
+
 ### Best Practices
 
 1. **Performance**

@@ -18,17 +18,19 @@
     "@flatfile/api": "latest",
     "@flatfile/http-logger": "latest",
     "@flatfile/listener": "latest",
+    "@flatfile/plugin-constraints": "latest",
     "@flatfile/plugin-job-handler": "latest",
     "@flatfile/plugin-record-hook": "latest",
     "@flatfile/plugin-space-configure": "latest",
     "@flatfile/plugin-xlsx-extractor": "latest",
+    "@flatfile/safe-api": "latest",
     "@flatfile/utils-debugger": "latest"
   },
   "devDependencies": {
     "@biomejs/biome": "2.1.1",
     "@total-typescript/tsconfig": "latest",
     "@types/bun": "latest",
-    "flatfile": "latest"
+    "flatfile": "^3.11.1"
   },
   "peerDependencies": {
     "typescript": "latest"
